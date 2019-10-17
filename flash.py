@@ -34,16 +34,19 @@ def uploads_file():
                             temp.append(name)
                             temp.append(team)
                             temp.append(a.split(" - ")[1])
-                            temp.append(int(row[a].split(".")[0]))
+                            try:
+                                temp.append(int(row[a].split(".")[0]))
+                            except:
+                                temp.append(row[a])
                             outputarray.append(temp)
-                            outputarray.sort(key = lambda x: x[2]) 
+                            outputarray.sort(key = lambda x: x[0]) 
         outputarray=[["name","by","team","Question","Answer","score"]]+outputarray
         with open("output.csv", "w") as f:
             writer = csv.writer(f)
             writer.writerows(outputarray)
-    os.system("rm uploads/* output.csv")
-    path="output.csv"
-    return send_file(path, as_attachment=True)
+        os.system("rm uploads/*")
+        path="output.csv"
+        return send_file(path, as_attachment=True)
 
 if __name__ == '__main__':
     app.config['UPLOAD_FOLDER']="."
