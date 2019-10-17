@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 import csv,itertools,zipfile,os
 app = Flask(__name__)
 
-@app.route('/upload')
+@app.route('/')
 def upload_file():
     return render_template('upload.html')
 
