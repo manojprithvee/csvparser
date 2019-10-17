@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request,send_file
 from werkzeug.utils import secure_filename
-import csv,itertools,zipfile,os
+import csv,itertools,os
 app = Flask(__name__)
 
 @app.route('/')
@@ -34,26 +34,15 @@ def uploads_file():
                             temp.append(name)
                             temp.append(team)
                             temp.append(a.split(" - ")[1])
-                            temp.append(row[a])
-                            try:
-                                total[a.split(" - ")[0]][1]+=int(row[a].split(".")[0])
-                            except:
-                                total[a.split(" - ")[0]].append(row[a])
+                            temp.append(int(row[a].split(".")[0]))
                             outputarray.append(temp)
                             outputarray.sort(key = lambda x: x[2]) 
         outputarray=[["name","by","team","Question","Answer","score"]]+outputarray
         with open("output.csv", "w") as f:
             writer = csv.writer(f)
             writer.writerows(outputarray)
-        with open("score.csv", "w") as f:
-            writer = csv.writer(f)
-            writer.writerows(total.values())
-        zf = zipfile.ZipFile("result.zip", "w", zipfile.ZIP_DEFLATED)
-        zf.write("score.csv")
-        zf.write("output.csv")
-        zf.close()
-    os.system("rm uploads/* output.csv score.csv")
-    path="result.zip"
+    os.system("rm uploads/* output.csv")
+    path="output.csv"
     return send_file(path, as_attachment=True)
 
 if __name__ == '__main__':
