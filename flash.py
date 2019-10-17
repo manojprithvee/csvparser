@@ -44,6 +44,7 @@ def uploads_file():
         with open("output.csv", "w") as f:
             writer = csv.writer(f)
             writer.writerows(outputarray)
+        del(outputarray)
         os.system("rm uploads/*")
         path="output.csv"
         return send_file(path, as_attachment=True)
