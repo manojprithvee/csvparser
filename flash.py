@@ -52,12 +52,9 @@ def uploads_file():
         zf.write("score.csv")
         zf.write("output.csv")
         zf.close()
-    os.system("rm uploads/*")
-    os.system("rm output.csv")
-    os.system("rm score.csv")
+    os.system("rm uploads/* output.csv score.csv")
     path="result.zip"
     return send_file(path, as_attachment=True)
-    return 'file uploaded successfully'
 
 if __name__ == '__main__':
     app.config['UPLOAD_FOLDER']="."
