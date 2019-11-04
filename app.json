@@ -1,0 +1,7 @@
+{
+  "name": "csv parser",
+  "description": "csv parser",
+  "repository": "",
+  "logo": "https://flask.palletsprojects.com/en/1.1.x/_static/flask-icon.png",
+  "keywords": ["flask","python"]
+}
