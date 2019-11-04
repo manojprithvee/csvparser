@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request,send_file
+from flask import Flask, render_template, request,send_file, g,after_this_request
 from werkzeug.utils import secure_filename
 import csv,itertools,os
 app = Flask(__name__)
@@ -47,6 +47,14 @@ def uploads_file():
         del(outputarray)
         os.system("rm uploads/*")
         path="output.csv"
+        @after_this_request
+        def remove_file(response):
+            print("jkgvgvk")
+            try:
+                os.remove(path)
+            except Exception as error:
+                app.logger.error("Error removing or closing downloaded file handle", error)
+            return response
         return send_file(path, as_attachment=True)
 
 if __name__ == '__main__':
